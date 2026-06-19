@@ -1,3 +1,9 @@
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+// Dynamically resolve the absolute directory structure to keep tests environment-agnostic
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const filePath = "file://" + encodeURI(path.resolve(__dirname, "../../docs/index.html"));
 // Unit test for sidebar scroll‑spy behavior using Vitest
 // This file should be placed under `submissions/examples/` so it complies with the temporary contribution guidelines.
 
@@ -15,9 +21,7 @@ beforeAll(async () => {
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   });
   page = await browser.newPage();
-  const filePath = "file://" + encodeURI(
-    "C:/Users/Kamal/Desktop/GSSOC/EaseMotion-css/docs/index.html"
-  );
+  
   await page.goto(filePath);
 });
 
@@ -70,3 +74,4 @@ test("sidebar highlight updates while scrolling through sections", async () => {
   activeId = await getActiveSidebarId();
   expect(activeId).toBe("contributing");
 });
+
